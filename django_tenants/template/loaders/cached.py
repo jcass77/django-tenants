@@ -24,6 +24,7 @@ class Loader(BaseLoader):
         """
         dirs_prefix = ''
         skip_prefix = ''
+        tenant_prefix = ''
 
         if skip:
             matching = [origin.name for origin in skip if origin.template_name == template_name]
@@ -32,6 +33,6 @@ class Loader(BaseLoader):
                 skip_prefix = self.generate_hash(matching)
 
         if connection.tenant:
-            dirs_prefix = connection.tenant.pk
+            tenant_prefix = str(connection.tenant.pk)
 
-        return '-'.join(s for s in (str(template_name), skip_prefix, dirs_prefix) if s)
+        return '-'.join(s for s in (str(template_name), tenant_prefix, skip_prefix, dirs_prefix) if s)
